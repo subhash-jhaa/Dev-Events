@@ -3,6 +3,9 @@ import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import LightRays from "@/components/LightRays";
 import Navbar from "@/components/Navbar";
+import { PHProvider } from "@/lib/posthog";
+import { ClerkProvider } from "@clerk/nextjs";
+import { connection } from "next/server";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
@@ -19,37 +22,42 @@ export const metadata: Metadata = {
   description: "The Hub Every Dev Event you Mustn't Miss",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connection();
   return (
-    <html lang="en">
-      <body
-        className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen antialiased`}
-      >
-        <Navbar />
-        <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
-          <LightRays
-            raysOrigin="top-center-offset"
-            raysColor="#5dfeca"
-            raysSpeed={0.5}
-            lightSpread={0.9}
-            rayLength={1.4}
-            followMouse={true}
-            mouseInfluence={0.02}
-            noiseAmount={0.0}
-            distortion={0.01}
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen antialiased`}
+        >
+          <PHProvider>
+            <Navbar />
+            <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
+              <LightRays
+                raysOrigin="top-center-offset"
+                raysColor="#5dfeca"
+                raysSpeed={0.5}
+                lightSpread={0.9}
+                rayLength={1.4}
+                followMouse={true}
+                mouseInfluence={0.02}
+                noiseAmount={0.0}
+                distortion={0.01}
 
-          />
-        </div>
-        <main>
+              />
+            </div>
+            <main>
 
-          {children}
+              {children}
 
-        </main>
-      </body>
-    </html>
+            </main>
+          </PHProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
