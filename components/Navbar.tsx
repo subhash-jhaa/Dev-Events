@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import posthog from 'posthog-js'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 
 const Navbar = () => {
   const handleNavClick = (linkName: string) => {
@@ -11,20 +12,33 @@ const Navbar = () => {
   }
 
   return (
-   <header>
-    <nav>
+    <header>
+      <nav>
         <Link href='/' className='logo' onClick={() => handleNavClick('Logo')}>
-        <img src='/icons/logo.png' alt='logo' width={24} height={24}/>
-        <p>DevEvent</p>
+          <img src='/icons/logo.png' alt='logo' width={24} height={24} />
+          <p>DevEvent</p>
 
         </Link>
         <ul>
-            <Link href="/" onClick={() => handleNavClick('Home')}>Home</Link>
-            <Link href="/" onClick={() => handleNavClick('Events')}>Events</Link>
-            <Link href="/" onClick={() => handleNavClick('Create Event')}>Create Event</Link>
+          <Link href="/" onClick={() => handleNavClick('Home')}>Home</Link>
+          <Link href="/events" onClick={() => handleNavClick('Events')}>Events</Link>
+          <SignedIn>
+            <Link href="/create-event" prefetch={false} onClick={() => handleNavClick('Create Event')}>Create Event</Link>
+          </SignedIn>
         </ul>
-    </nav>
-   </header>
+
+        <div className="nav-auth">
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="btn-signin">Sign In</button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+        </div>
+      </nav>
+    </header>
   )
 }
 
