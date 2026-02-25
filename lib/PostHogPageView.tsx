@@ -12,7 +12,7 @@ export default function PostHogPageView(): null {
   useEffect(() => {
     // Track pageviews
     if (pathname && posthog) {
-      let url = window.origin + pathname
+      let url = window.location.origin + pathname
       if (searchParams && searchParams.toString()) {
         url = url + `?${searchParams.toString()}`
       }

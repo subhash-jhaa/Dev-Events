@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import LightRays from "@/components/LightRays";
-import Navbar from "@/components/Navbar";
+import ComplexNavbar from "@/components/ComplexNavbar";
+import Footer from "@/components/Footer";
 import { PHProvider } from "@/lib/posthog";
 import { ClerkProvider } from "@clerk/nextjs";
 import { connection } from "next/server";
@@ -35,7 +36,7 @@ export default async function RootLayout({
           className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen antialiased`}
         >
           <PHProvider>
-            <Navbar />
+            <ComplexNavbar />
             <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
               <LightRays
                 raysOrigin="top-center-offset"
@@ -50,11 +51,10 @@ export default async function RootLayout({
 
               />
             </div>
-            <main>
-
+            <main className="pt-24">
               {children}
-
             </main>
+            <Footer />
           </PHProvider>
         </body>
       </html>

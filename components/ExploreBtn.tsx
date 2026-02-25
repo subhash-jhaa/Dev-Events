@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowDownRight } from 'lucide-react'
+import Link from 'next/link'
 import posthog from 'posthog-js'
 
 const ExploreBtn = () => {
@@ -8,16 +10,17 @@ const ExploreBtn = () => {
   }
 
   return (
-   <button type="button" id="explore-btn" className="mt-7 mx-auto" onClick={handleClick}>
-
-     <a href="#events">Explore Events
-        <img src="/icons/arrow-down.svg" alt="arrow-down" width={24} height={24}/>
-         </a>
-   </button>
-
-
-
-)
+    <Link
+      href="/events/hackathon-2024"
+      prefetch={false}
+      id="explore-btn"
+      className="mt-7 mx-auto inline-flex items-center justify-center"
+      onClick={handleClick}
+    >
+      Explore Now
+      <ArrowDownRight size={20} />
+    </Link>
+  )
 }
 
 export default ExploreBtn

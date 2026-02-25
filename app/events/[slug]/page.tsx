@@ -1,4 +1,5 @@
 import BookEvent from "@/components/BookEvent";
+import AddToCalendar from "@/components/AddToCalendar";
 import { getSimilarEventsBySlug, getEventBySlug } from "@/lib/actions/event.action";
 import EventCard from "@/components/Eventcard";
 import { notFound } from "next/navigation";
@@ -93,6 +94,7 @@ const EventDetailsContent = async ({ params }: { params: Promise<{ slug: string 
           <div className="signup-card">
             <h2>Book Your Spot</h2>
             <BookEvent eventId={event._id} slug={event.slug} />
+            <AddToCalendar event={event} />
           </div>
         </aside>
       </div>
