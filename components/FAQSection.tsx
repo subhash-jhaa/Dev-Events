@@ -1,7 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { Plus, X } from 'lucide-react'
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const faqs = [
     {
@@ -31,12 +35,6 @@ const faqs = [
 ]
 
 const FAQSection = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-    const toggleFAQ = (index: number) => {
-        setOpenIndex(openIndex === index ? null : index)
-    }
-
     return (
         <section id="faq" className="py-24 animate-fade-up [animation-delay:500ms]">
             <div className="text-center mb-16">
@@ -46,45 +44,23 @@ const FAQSection = () => {
                 <h2 className="text-4xl font-bold text-white">Frequently Asked Questions</h2>
             </div>
 
-            <div className="max-w-3xl mx-auto space-y-4">
-                {faqs.map((faq, index) => {
-                    const isOpen = openIndex === index
-                    return (
-                        <div
+            <div className="max-w-3xl mx-auto">
+                <Accordion type="single" collapsible className="w-full space-y-4">
+                    {faqs.map((faq, index) => (
+                        <AccordionItem
                             key={index}
-                            className={`group border rounded-xl transition-all duration-300 ${isOpen
-                                    ? 'bg-white/5 border-primary/30 border-l-[3px]'
-                                    : 'bg-white/[0.03] border-white/[0.07] hover:bg-white/[0.05] border-l-transparent'
-                                }`}
+                            value={`item-${index}`}
+                            className="group border rounded-xl bg-white/[0.03] border-white/[0.07] hover:bg-white/[0.05] transition-all duration-300 data-[state=open]:bg-white/5 data-[state=open]:border-primary/30 data-[state=open]:border-l-[3px] data-[state=open]:border-l-primary px-2"
                         >
-                            <button
-                                onClick={() => toggleFAQ(index)}
-                                className="w-full px-6 py-5 flex items-center justify-between text-left outline-none"
-                            >
-                                <span className={`text-[17px] font-medium transition-colors ${isOpen ? 'text-white' : 'text-light-200 group-hover:text-white'
-                                    }`}>
-                                    {faq.question}
-                                </span>
-                                <div className={`transition-transform duration-300 ${isOpen ? 'rotate-0' : 'rotate-90 text-light-200'}`}>
-                                    {isOpen ? (
-                                        <X size={20} className="text-primary" />
-                                    ) : (
-                                        <Plus size={20} className="group-hover:text-white" />
-                                    )}
-                                </div>
-                            </button>
-
-                            <div
-                                className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'
-                                    }`}
-                            >
-                                <div className="px-6 pb-6 text-light-200 leading-relaxed text-[15px]">
-                                    {faq.answer}
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
+                            <AccordionTrigger className="px-4 py-5 hover:no-underline text-[17px] font-medium text-light-200 hover:text-white data-[state=open]:text-white transition-colors duration-200">
+                                {faq.question}
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-6 text-light-200 leading-relaxed text-[15px]">
+                                {faq.answer}
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
             </div>
         </section>
     )

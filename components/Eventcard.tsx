@@ -10,31 +10,48 @@ interface props {
   date: string;
   time: string;
 }
+
 const Eventcard = ({ title, image, slug, location, date, time }: props) => {
-
   return (
-    <Link href={`/events/${slug}`} id="event-card" prefetch={false}>
-      <img src={image} alt={title} width={410} height={300} className="poster" />
-
-      <div className="flex flex-row gap-2">
-        <img src="/icons/pin.svg" alt="location" width={14} height={14} />
-        <p className="info">{location}</p>
-      </div>
-
-      <p className="title">{title}</p>
-
-      <div className="datetime">
-        <div>
-          <img src="/icons/calendar.svg" alt="calendar" width={14} height={14} />
-          <p className="info">{date}</p>
+    <div className="p-1">
+      <Link
+        href={`/events/${slug}`}
+        id="event-card"
+        prefetch={false}
+        className="block tilt-on-hover inner-glow bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 transition-all overflow-hidden group h-full"
+      >
+        <div className="overflow-hidden rounded-xl mb-5 aspect-[4/3]">
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
         </div>
 
-        <div>
-          <img src="/icons/clock.svg" alt="clock" width={14} height={14} />
-          <p className="info">{time}</p>
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-primary">
+            <img src="/icons/pin.svg" alt="location" width={14} height={14} className="opacity-80" />
+            <p className="text-[12px] font-semibold tracking-wide uppercase opacity-90">{location}</p>
+          </div>
+
+          <p className="text-xl font-bold text-white group-hover:text-primary transition-colors line-clamp-1">
+            {title}
+          </p>
+
+          <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-auto">
+            <div className="flex items-center gap-2">
+              <img src="/icons/calendar.svg" alt="calendar" width={14} height={14} className="opacity-60" />
+              <p className="text-[13px] text-light-200">{date}</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <img src="/icons/clock.svg" alt="clock" width={14} height={14} className="opacity-60" />
+              <p className="text-[13px] text-light-200">{time}</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   )
 }
 
