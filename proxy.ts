@@ -5,7 +5,7 @@ const isPrivateRoute = createRouteMatcher([
     '/profile(.*)',
 ]);
 
-export const proxy = clerkMiddleware(async (auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
     if (isPrivateRoute(req)) {
         await auth.protect();
     }

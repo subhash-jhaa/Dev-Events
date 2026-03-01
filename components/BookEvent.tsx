@@ -21,18 +21,31 @@ const BookEvent = ({ eventId, slug }: { eventId: string, slug: string }) => {
         const email = user.primaryEmailAddress?.emailAddress ?? '';
         const userId = user.id;
 
-        const result = await createBooking({ eventId, email, userId });
+        try {
+            const response = await fetch('/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ eventId, email, userId }),
+            });
 
-        if (result.success) {
-            setSubmitted(true);
-            posthog.capture('booking_created', { eventId, slug, email });
-        } else if (result.error === 'already_booked') {
-            setError("You've already booked this event!");
-        } else {
-            setError(`Booking failed: ${result.error}`);
-            console.error("Booking failed:", result.error);
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                setSubmitted(true);
+                posthog.capture('booking_created', { eventId, slug, email });
+            } else if (response.status === 409 || result.error === 'already_booked') {
+                setError("You've already booked this event!");
+            } else {
+                setError(`Booking failed: ${result.message || result.error || 'Unknown error'}`);
+            }
+        } catch (err) {
+            setError("Something went wrong. Please try again.");
+            console.error("Booking submission error:", err);
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
 
     // User is not signed in — prompt them

@@ -19,3 +19,20 @@ export const createBooking = async ({ eventId, email, userId }: { eventId: strin
         return { success: false, error: e.message || 'unknown_error' };
     }
 }
+
+export const getBookingsByUserId = async (userId: string) => {
+    try {
+        await connectDB();
+        const bookings = await Booking.find({ userId })
+            .populate({
+                path: 'eventId',
+                model: 'Event'
+            })
+            .sort({ createdAt: -1 });
+
+        return JSON.parse(JSON.stringify(bookings));
+    } catch (e) {
+        console.error("Error fetching bookings:", e);
+        return [];
+    }
+}
