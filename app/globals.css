@@ -383,26 +383,26 @@
   }
 
   .trending-card {
-    @apply flex-shrink-0 w-[280px] bg-dark-100 border border-dark-200 rounded-xl overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer;
+    @apply flex-shrink-0 w-[320px] bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl overflow-hidden transition-all duration-500 hover:bg-white/[0.06] hover:border-primary/30 hover:shadow-[0_0_40px_-15px_rgba(93,254,202,0.3)] cursor-pointer;
 
     .trending-poster {
-      @apply h-[160px] w-full object-cover;
+      @apply h-[180px] w-full object-cover grayscale-[0.3] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105;
     }
 
     .trending-info {
-      @apply p-4;
+      @apply p-5 space-y-2;
     }
 
     .trending-tag {
-      @apply text-[10px] font-bold text-primary uppercase tracking-tighter mb-1 block;
+      @apply text-[10px] font-bold text-primary uppercase tracking-widest mb-1 block opacity-80;
     }
 
     .trending-title {
-      @apply text-[15px] font-semibold text-white line-clamp-1;
+      @apply text-[17px] font-bold text-white line-clamp-1 group-hover:text-primary transition-colors;
     }
 
     .trending-meta {
-      @apply text-[12px] text-light-200 mt-1;
+      @apply text-[12px] text-light-200 font-medium opacity-60;
     }
   }
 }

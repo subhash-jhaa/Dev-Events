@@ -18,13 +18,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { seedEvents } from "@/lib/actions/seed.action";
 
 const Page = async () => {
+  await seedEvents(); // Populate sample events for better UI showcase
   const events: IEvent[] = await getAllEvents();
 
   return (
-    <section id="home" className="space-y-24 pb-20">
-      {/* Hero Section */}
+    <section id="home" className="space-y-32 pb-20">
       <SectionReveal delay={0.1} className="text-center pt-10">
         <div className="live-badge">
           <div className="dot"></div>
@@ -136,7 +137,7 @@ const Page = async () => {
       <SectionReveal>
         <FAQSection />
       </SectionReveal>
-    </section >
+    </section>
   )
 }
 
